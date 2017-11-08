@@ -1,0 +1,27 @@
+{
+  "name": "onic",
+  "version": "1.0.0",
+  "description": "豆包网API平台接入JavaScript SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dctxf/onic.git"
+  },
+  "keywords": [
+    "api",
+    "doubao"
+  ],
+  "author": "dctxf",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dctxf/onic/issues"
+  },
+  "homepage": "https://github.com/dctxf/onic#readme",
+  "dependencies": {
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
