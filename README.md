@@ -4,13 +4,19 @@
 
 ## Usage
 
-```
+```js
 <!--全局设置-->
 const config = {
-	appkey:'XXXX',
-	gateway:'/xxx/xxx',
-	publicKey:'',
-	pr
+	appKey: '11111',
+	appSerect: '221sd1daa',
+	gateway: 'http://xxx.com/aaa',
+	publicKey: '/keys/publick.pem',
+	privateKey: '/keys/private.pem',
+	format: 'json',
+	signType: 'RSA',
+	charset: 'UTF-8',
+	version: '1.0.0',
+	encrypt: 1
 }
 const onic = new Onic(config)
 ```
