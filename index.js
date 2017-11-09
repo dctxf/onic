@@ -2,7 +2,7 @@
  * @Author: dctxf
  * @Date:   2017-11-08 10:43:01
  * @Last Modified by:   dctxf
- * @Last Modified time: 2017-11-09 14:19:17
+ * @Last Modified time: 2017-11-09 14:56:40
  */
 /**
  * [exports description]
@@ -39,9 +39,7 @@ Onic.prototype.post = function (serviceName, data) {
   // return this
   if (this.sysInputArg.encrypt !== 0) {
     // 对content加密
-    content = crypto.createSign('RSA-SHA1')
-      .update(content)
-      .sign(this.publicKey, 'hex')
+    content = JSON.stringify(this.countersign(JSON.parse(content)))
   }
   body = Object.assign({}, this.sysInputArg, {
     serviceName,
@@ -49,6 +47,7 @@ Onic.prototype.post = function (serviceName, data) {
     timestamp: +new Date()
   })
   body.sign = this.countersign(body) //加签
+  // return sortKeys(body)
   return Promise.resolve(rp({
     method: 'POST',
     uri: this.gateway,
@@ -68,6 +67,7 @@ Onic.prototype.countersign = function (data) {
   // return toBeSign
   switch (this.sysInputArg.signType.toLocaleUpperCase()) {
     case 'RSA':
+      return crypto.createSign('RSA-SHA1').update(toBeSign).sign(this.privateKey, 'base64')
       break
     default:
       return crypto.createHash('md5').update(toBeSign + this.appSerect).digest('hex')
