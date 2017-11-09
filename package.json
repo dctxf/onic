@@ -22,6 +22,7 @@
   "homepage": "https://github.com/dctxf/onic#readme",
   "dependencies": {
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sort-keys": "^2.0.0"
   }
 }
