@@ -2,7 +2,7 @@
  * @Author: dctxf
  * @Date:   2017-11-08 10:43:01
  * @Last Modified by:   dctxf
- * @Last Modified time: 2017-11-09 14:56:40
+ * @Last Modified time: 2017-11-10 09:47:09
  */
 /**
  * [exports description]
@@ -39,7 +39,8 @@ Onic.prototype.post = function (serviceName, data) {
   // return this
   if (this.sysInputArg.encrypt !== 0) {
     // 对content加密
-    content = JSON.stringify(this.countersign(JSON.parse(content)))
+    content = this.publicEncrypt(content)
+    // return content
   }
   body = Object.assign({}, this.sysInputArg, {
     serviceName,
@@ -72,5 +73,29 @@ Onic.prototype.countersign = function (data) {
     default:
       return crypto.createHash('md5').update(toBeSign + this.appSerect).digest('hex')
   }
+}
+Onic.prototype.publicEncrypt = function (data, publicKey) {
+  return crypto.publicEncrypt({
+    key: publicKey ? publicKey : this.publicKey,
+    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+  }, new Buffer(data, 'base64')).toString('base64')
+}
+Onic.prototype.publicDecrypt = function (data, publicKey) {
+  return crypto.publicDecrypt({
+    key: publicKey ? publicKey : this.publicKey,
+    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+  }, new Buffer(data, 'base64')).toString('base64')
+}
+Onic.prototype.privateEncrypt = function (data, privateKey) {
+  return crypto.privateEncrypt({
+    key: privateKey ? privateKey : this.privateKey,
+    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+  }, new Buffer(data, 'base64')).toString('base64')
+}
+Onic.prototype.privateDecrypt = function (data, privateKey) {
+  return crypto.privateDecrypt({
+    key: privateKey ? privateKey : this.privateKey,
+    padding: crypto.constants.RSA_PKCS1_OAEP_PADDING
+  }, new Buffer(data, 'base64')).toString('base64')
 }
 module.exports = Onic
