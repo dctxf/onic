@@ -2,7 +2,7 @@
  * @Author: dctxf
  * @Date:   2017-11-08 10:43:01
  * @Last Modified by:   dctxf
- * @Last Modified time: 2017-11-10 09:47:09
+ * @Last Modified time: 2017-11-10 10:17:30
  */
 /**
  * [exports description]
@@ -33,7 +33,7 @@ const Onic = function (options = {}) {
     encrypt: options.encrypt !== 0 ? 1 : 0 //content是否进行RSA加密，如果请求加密，那么响应也是加密的,1加密，0不加密
   }
 }
-Onic.prototype.post = function (serviceName, data) {
+Onic.prototype.post = function (serviceName, data, customerConfig = {}) {
   let content = JSON.stringify(sortKeys(data))
   let body
   // return this
@@ -46,7 +46,7 @@ Onic.prototype.post = function (serviceName, data) {
     serviceName,
     content,
     timestamp: +new Date()
-  })
+  }, customerConfig)
   body.sign = this.countersign(body) //加签
   // return sortKeys(body)
   return Promise.resolve(rp({
